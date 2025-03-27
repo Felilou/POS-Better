@@ -33,7 +33,7 @@ public class Match extends AbstractEntity {
 
     private final LocalDateTime kickOffTime;
 
-    public Match(@NonNull Team homeTeam, @NonNull Team awayTeam, LocalDateTime kickOffTime) {
+    protected Match(@NonNull Team homeTeam, @NonNull Team awayTeam, LocalDateTime kickOffTime) {
         this.awayTeam = awayTeam;
         this.homeTeam = homeTeam;
 

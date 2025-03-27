@@ -1,11 +1,9 @@
-package org.example.sportverein.persons;
+package org.example.sportverein.persons.Player;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.example.sportverein.Team.Team;
+import org.example.sportverein.persons.Person;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -14,7 +12,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(callSuper = true)
 public class Player extends Person {
 

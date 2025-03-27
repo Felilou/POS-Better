@@ -1,4 +1,4 @@
-package org.example.sportverein.persons;
+package org.example.sportverein.persons.Staff;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

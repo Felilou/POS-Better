@@ -1,18 +1,18 @@
-package org.example.sportverein.persons;
+package org.example.sportverein.persons.Staff;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.example.sportverein.Team.Team;
+import org.example.sportverein.persons.Person;
 
 @Entity
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Staff extends Person {
 
     @ManyToOne

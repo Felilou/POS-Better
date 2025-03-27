@@ -3,9 +3,7 @@ package org.example.sportverein.Team;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.example.sportverein.AbstractEntity;
 import org.example.sportverein.Match.Match;
 
@@ -16,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Team extends AbstractEntity {
 
     private boolean archived = false;

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
 import org.example.sportverein.AbstractEntity;
-import org.example.sportverein.persons.Player;
+import org.example.sportverein.persons.Player.Player;
 
 @Entity
 @Getter
@@ -52,7 +52,7 @@ public class MatchEvent extends AbstractEntity {
         }
     }
 
-    public MatchEvent(@NonNull Match match) {
+    protected MatchEvent(@NonNull Match match) {
         this.match = match;
         match.addEvent(this);
     }

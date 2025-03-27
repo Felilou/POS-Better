@@ -1,4 +1,4 @@
-package org.example.sportverein.persons;
+package org.example.sportverein.persons.Player;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
@@ -14,7 +14,7 @@ import java.time.Period;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Getter
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
 public class PlayerTeamMembership extends AbstractEntity {
 

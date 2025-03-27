@@ -3,7 +3,6 @@ package org.example.sportverein.persons;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
-import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.example.sportverein.AbstractEntity;
 
@@ -28,7 +27,6 @@ public abstract class Person extends AbstractEntity {
     @Embedded
     PhoneNumber phoneNumber;
 
-    @Email
     String email;
 
     @Transient
