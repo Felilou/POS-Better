@@ -29,6 +29,7 @@ public class MatchEvent extends AbstractEntity {
     @Min(0)
     @Max(90)
     @Column(name = "min")
+    @Setter
     private int minute;
 
     public enum EventType {

@@ -13,4 +13,5 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
     @Query("select s from Staff s join Team t on t.uuid = s.team.uuid and t.uuid = :teamUuid")
     List<Staff> getAllStaffsByTeam(UUID teamUuid);
 
+    Staff findByUuid(UUID uuid);
 }

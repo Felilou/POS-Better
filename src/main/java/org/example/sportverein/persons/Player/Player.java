@@ -16,6 +16,8 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Player extends Person {
 
+    private boolean isActive;
+
     @ManyToOne
     private Team team;
 
@@ -93,4 +95,12 @@ public class Player extends Person {
             throw new UnsupportedOperationException("Cant remove a player which has played for a team or is playing for a team, can only be archived");
         }
     }
+
+    public void setIsActive(boolean active) {
+        isActive = active;
+        if(!isActive) {
+            setTeam(null);
+        }
+    }
+
 }
