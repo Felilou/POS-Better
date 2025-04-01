@@ -47,7 +47,7 @@ public record TeamDTO(
         }
     }
 
-    public record MatchSummaryDTO(UUID uuid, UUID homeTeamId, UUID awayTeamId, LocalDateTime kickOffTime, String homeTeamName, String awayTeamName) {
+    public record MatchSummaryDTO(UUID uuid, UUID homeTeamId, UUID awayTeamId, LocalDateTime kickOffTime, String homeTeamName, String awayTeamName, int eventCount) {
         public static MatchSummaryDTO fromMatch(Match match) {
             if (match == null) return null;
             return new MatchSummaryDTO(
@@ -56,7 +56,8 @@ public record TeamDTO(
                 match.getAwayTeam().getUuid(),
                 match.getKickOffTime(),
                 match.getHomeTeam().getName(),
-                match.getAwayTeam().getName()
+                match.getAwayTeam().getName(),
+                match.getEvents().size()
             );
         }
     }

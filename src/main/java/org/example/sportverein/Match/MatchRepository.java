@@ -15,5 +15,4 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     @Query("select m from Match m where m.awayTeam.uuid = :teamUUID or m.homeTeam.uuid = :teamUUID")
     List<Match> findAllByTeamUUID(UUID teamUUID);
-
 }

@@ -1,12 +1,13 @@
 package org.example.sportverein.Match;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import org.example.sportverein.AbstractEntity;
 import org.example.sportverein.Team.Team;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,6 +25,9 @@ public class Match extends AbstractEntity {
 
     private final LocalDateTime kickOffTime;
 
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private final List<MatchEvent> events = new ArrayList<>();
+
     protected Match(@NonNull Team homeTeam, @NonNull Team awayTeam, LocalDateTime kickOffTime) {
         this.awayTeam = awayTeam;
         this.homeTeam = homeTeam;
@@ -33,6 +37,10 @@ public class Match extends AbstractEntity {
         }
 
         this.kickOffTime = kickOffTime;
+    }
+
+    public void addEvent(MatchEvent event) {
+        events.add(event);
     }
 
     @Override

@@ -17,8 +17,7 @@ public class MatchEvent extends AbstractEntity {
     private Player player;
 
     @ManyToOne
-    @NonNull
-    private final Match match;
+    private Match match;
 
     @Setter
     @NonNull
@@ -53,7 +52,16 @@ public class MatchEvent extends AbstractEntity {
     }
 
     protected MatchEvent(@NonNull Match match) {
+        setMatch(match);
+    }
+
+    public void setMatch(@NonNull Match match) {
+        if(this.match != null) {
+            throw new IllegalStateException("Match has already been set");
+        }
+
         this.match = match;
+        match.addEvent(this);
     }
 
     protected void setPlayer(@NonNull Player player) {
