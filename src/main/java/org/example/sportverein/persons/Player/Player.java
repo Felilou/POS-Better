@@ -86,7 +86,6 @@ public class Player extends Person {
 
     @Override
     public void prePersistHook() {
-
     }
 
     @Override

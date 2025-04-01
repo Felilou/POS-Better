@@ -21,6 +21,7 @@ public record TeamDTO(
     List<PlayerTeamMembershipSummaryDTO> playerHistory,
     List<MatchEventSummaryDTO> events
 ) {
+
     public record PlayerSummaryDTO(UUID uuid, String firstName, String lastName, String position, boolean isActive) {
         public static PlayerSummaryDTO fromPlayer(Player player) {
             if (player == null) return null;
@@ -46,14 +47,16 @@ public record TeamDTO(
         }
     }
 
-    public record MatchSummaryDTO(UUID uuid, UUID homeTeamId, UUID awayTeamId, LocalDateTime kickOffTime) {
+    public record MatchSummaryDTO(UUID uuid, UUID homeTeamId, UUID awayTeamId, LocalDateTime kickOffTime, String homeTeamName, String awayTeamName) {
         public static MatchSummaryDTO fromMatch(Match match) {
             if (match == null) return null;
             return new MatchSummaryDTO(
                 match.getUuid(),
                 match.getHomeTeam().getUuid(),
                 match.getAwayTeam().getUuid(),
-                match.getKickOffTime()
+                match.getKickOffTime(),
+                match.getHomeTeam().getName(),
+                match.getAwayTeam().getName()
             );
         }
     }
@@ -112,4 +115,5 @@ public record TeamDTO(
                 .collect(Collectors.toList())
         );
     }
+
 }
