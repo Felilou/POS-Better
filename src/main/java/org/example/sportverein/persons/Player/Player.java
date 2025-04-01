@@ -16,12 +16,14 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Player extends Person {
 
+    private boolean archived;
+
     @ManyToOne
     private Team team;
 
     private LocalDateTime joinedCurrentTeamAt;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private final Set<PlayerTeamMembership> teamMemberships = new HashSet<>();
 
     @Enumerated(EnumType.STRING)

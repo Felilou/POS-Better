@@ -14,7 +14,6 @@ import org.example.sportverein.persons.Player.Player;
 public class MatchEvent extends AbstractEntity {
 
     @ManyToOne
-    @NonNull
     private Player player;
 
     @ManyToOne
@@ -29,6 +28,7 @@ public class MatchEvent extends AbstractEntity {
     @Min(0)
     @Max(90)
     @Column(name = "min")
+    @Setter
     private int minute;
 
     public enum EventType {
@@ -54,7 +54,6 @@ public class MatchEvent extends AbstractEntity {
 
     protected MatchEvent(@NonNull Match match) {
         this.match = match;
-        match.addEvent(this);
     }
 
     protected void setPlayer(@NonNull Player player) {
@@ -65,14 +64,11 @@ public class MatchEvent extends AbstractEntity {
         this.player = player;
     }
 
-
     @Override
     public void prePersistHook() {
-
     }
 
     @Override
     public void preRemoveHook() {
-        match.removeEvent(this);
     }
 }

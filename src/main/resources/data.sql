@@ -7,16 +7,16 @@ INSERT INTO team (id, uuid, archived, name) VALUES
                                                 (5, random_uuid(), true, 'Schalke 04');
 
 -- Players
-INSERT INTO player (id, uuid, first_name, last_name, birth_date, email, country_code, number, position, team_id, joined_current_team_at) VALUES
-                                                                                                                                             (1, random_uuid(), 'Manuel', 'Neuer', '1986-03-27', 'neuer@example.com', '+49', '1234567', 'GK', 1, '2011-06-01'),
-                                                                                                                                             (2, random_uuid(), 'Thomas', 'Müller', '1989-09-13', 'mueller@example.com', '+49', '2345678', 'AM', 1, '2008-08-15'),
-                                                                                                                                             (3, random_uuid(), 'Joshua', 'Kimmich', '1995-02-08', 'kimmich@example.com', '+49', '3456789', 'CM', 1, '2015-07-01'),
-                                                                                                                                             (4, random_uuid(), 'Marco', 'Reus', '1989-05-31', 'reus@example.com', '+49', '4567890', 'AM', 2, '2012-07-01'),
-                                                                                                                                             (5, random_uuid(), 'Mats', 'Hummels', '1988-12-16', 'hummels@example.com', '+49', '5678901', 'CB', 2, '2019-06-19'),
-                                                                                                                                             (6, random_uuid(), 'Erling', 'Haaland', '2000-07-21', 'haaland@example.com', '+47', '6789012', 'ST', null, null),
-                                                                                                                                             (7, random_uuid(), 'Christopher', 'Nkunku', '1997-11-14', 'nkunku@example.com', '+33', '7890123', 'AM', 3, '2019-07-01'),
-                                                                                                                                             (8, random_uuid(), 'Dani', 'Olmo', '1998-05-07', 'olmo@example.com', '+34', '8901234', 'AM', 3, '2020-01-25'),
-                                                                                                                                             (9, random_uuid(), 'Florian', 'Wirtz', '2003-05-03', 'wirtz@example.com', '+49', '9012345', 'AM', 4, '2020-01-18');
+INSERT INTO player (id, uuid, first_name, last_name, birth_date, email, country_code, number, position, team_id, joined_current_team_at, archived) VALUES
+                                                                                                                                             (1, random_uuid(), 'Manuel', 'Neuer', '1986-03-27', 'neuer@example.com', '+49', '1234567', 'GK', 1, '2011-06-01', false),
+                                                                                                                                             (2, random_uuid(), 'Thomas', 'Müller', '1989-09-13', 'mueller@example.com', '+49', '2345678', 'AM', 1, '2008-08-15', false),
+                                                                                                                                             (3, random_uuid(), 'Joshua', 'Kimmich', '1995-02-08', 'kimmich@example.com', '+49', '3456789', 'CM', 1, '2015-07-01', false),
+                                                                                                                                             (4, random_uuid(), 'Marco', 'Reus', '1989-05-31', 'reus@example.com', '+49', '4567890', 'AM', 2, '2012-07-01', false),
+                                                                                                                                             (5, random_uuid(), 'Mats', 'Hummels', '1988-12-16', 'hummels@example.com', '+49', '5678901', 'CB', 2, '2019-06-19', false),
+                                                                                                                                             (6, random_uuid(), 'Erling', 'Haaland', '2000-07-21', 'haaland@example.com', '+47', '6789012', 'ST', null, null, false),
+                                                                                                                                             (7, random_uuid(), 'Christopher', 'Nkunku', '1997-11-14', 'nkunku@example.com', '+33', '7890123', 'AM', 3, '2019-07-01', false),
+                                                                                                                                             (8, random_uuid(), 'Dani', 'Olmo', '1998-05-07', 'olmo@example.com', '+34', '8901234', 'AM', 3, '2020-01-25', false),
+                                                                                                                                             (9, random_uuid(), 'Florian', 'Wirtz', '2003-05-03', 'wirtz@example.com', '+49', '9012345', 'AM', 4, '2020-01-18', false);
 
 -- Staff
 INSERT INTO staff (id, uuid, first_name, last_name, birth_date, email, country_code, number, team_id, role) VALUES
