@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/teams")
 @RequiredArgsConstructor
-public class TeamRestController extends AbstractRestController<Team, CreateTeamDTO, UpdateTeamDTO, TeamService, TeamDTO> {
+public class TeamRestController extends AbstractRestController<Team, TeamDTO> {
 
     private final TeamService teamService;
 

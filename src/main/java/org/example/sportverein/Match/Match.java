@@ -53,8 +53,8 @@ public class Match extends AbstractEntity {
 
     }
 
-    public boolean contestantsContain(Team team) {
-        return homeTeam.equals(team) || awayTeam.equals(team);
+    public List<MatchEvent> getEvents() {
+        return List.copyOf(events);
     }
 
 }
