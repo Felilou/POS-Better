@@ -10,10 +10,10 @@ import java.util.UUID;
 public record CreateMatchEventDTO(
 
         @NotNull
-        MatchEvent.EventType eventType,
+        UUID playerUUID,
 
         @NotNull
-        UUID playerUUID,
+        MatchEvent.EventType eventType,
 
         @Min(0)
         @Max(90)

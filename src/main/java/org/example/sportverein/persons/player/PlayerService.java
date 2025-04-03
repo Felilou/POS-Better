@@ -8,12 +8,14 @@ import org.example.sportverein.team.Team;
 import org.example.sportverein.team.TeamRepository;
 import org.example.sportverein.UUIDRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PlayerService extends AbstractService<Player> {
 
     private final PlayerRepository playerRepository;
@@ -25,20 +27,22 @@ public class PlayerService extends AbstractService<Player> {
         return playerRepository;
     }
 
+    @Transactional
     public void addPlayerToTeam(UUID playerUUID, UUID teamUUID) {
         Player player = playerRepository.findByUUID(playerUUID);
         Team team = teamRepository.findByUUID(teamUUID);
         player.setTeam(team);
-        playerRepository.save(player);
     }
 
+
+    @Transactional
     public void removePlayerFromTeam(UUID playerUUID) {
         Player player = playerRepository.findByUUID(playerUUID);
         player.setTeam(null);
-        playerRepository.save(player);
     }
 
     @Override
+    @Transactional
     public Player delete(UUID playerUUID) {
         Player player = playerRepository.findByUUID(playerUUID);
         player.setArchived(true);
@@ -48,5 +52,6 @@ public class PlayerService extends AbstractService<Player> {
     public List<MatchEvent> getMatchEventsOfPlayer(UUID playerUUID) {
         return matchEventRepository.getAllByPlayerUUID(playerUUID);
     }
+
 
 }

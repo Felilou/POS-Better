@@ -4,14 +4,16 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import lombok.*;
 import org.example.sportverein.AbstractEntity;
 import org.example.sportverein.team.Team;
 
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "player")
 @Entity
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,8 +36,14 @@ public class PlayerTeamMembership extends AbstractEntity {
     @Column(name = "to_time")
     private final LocalDateTime to;
 
+    @Transient
     public Period getPeriod() {
         return Period.between(from.toLocalDate(), to.toLocalDate());
+    }
+
+    @Transient
+    public Long getDaysTotal() {
+        return ChronoUnit.DAYS.between(from, to);
     }
 
     @Override

@@ -4,20 +4,20 @@
 @leipzigTeamUuid = 33333333-3333-3333-3333-333333333333
 @leverkusenTeamUuid = 44444444-4444-4444-4444-444444444444
 
-@neuerUuid = aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
-@muellerUuid = bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb
-@kimmichUuid = cccccccc-cccc-cccc-cccc-cccccccccccc
-@reusUuid = dddddddd-dddd-dddd-dddd-dddddddddddd
-@hummelsUuid = eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee
-@haalandUuid = ffffffff-ffff-ffff-ffff-ffffffffffff
+@neuerUuid = a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1
+@muellerUuid = b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2
+@kimmichUuid = c3c3c3c3-c3c3-c3c3-c3c3-c3c3c3c3c3c3
+@reusUuid = d4d4d4d4-d4d4-d4d4-d4d4-d4d4d4d4d4d4
+@hummelsUuid = e5e5e5e5-e5e5-e5e5-e5e5-e5e5e5e5e5e5
+@haalandUuid = f6f6f6f6-f6f6-f6f6-f6f6-f6f6f6f6f6f6
 
-@nagelsmannUuid = jjjjjjjj-jjjj-jjjj-jjjj-jjjjjjjjjjjj
-@terzicUuid = kkkkkkkk-kkkk-kkkk-kkkk-kkkkkkkkkkkk
+@nagelsmannUuid = j1j1j1j1-j1j1-j1j1-j1j1-j1j1j1j1j1j1
+@terzicUuid = k2k2k2k2-k2k2-k2k2-k2k2-k2k2k2k2k2k2
 
-@bayernDortmundMatchUuid = tttttttt-tttt-tttt-tttt-tttttttttttt
-@leipzigLeverkusenMatchUuid = uuuuuuuu-uuuu-uuuu-uuuu-uuuuuuuuuuuu
+@bayernDortmundMatchUuid = t1t1t1t1-t1t1-t1t1-t1t1-t1t1t1t1t1t1
+@leipzigLeverkusenMatchUuid = u2u2u2u2-u2u2-u2u2-u2u2-u2u2u2u2u2u2
 
-@muellerGoalEventUuid = yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy
+@muellerGoalEventUuid = y1y1y1y1-y1y1-y1y1-y1y1-y1y1y1y1y1y1
 
 ### Get all teams
 GET http://localhost:8080/api/team

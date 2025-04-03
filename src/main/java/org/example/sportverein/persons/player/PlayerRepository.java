@@ -20,4 +20,16 @@ public interface PlayerRepository extends UUIDRepository<Player> {
              "ptm.team.uuid = :teamUUID AND ptm.from <= :at AND ptm.to >= :at)")
     List<Player> getAllByTeamHistoryAndTeamUUID(UUID teamUUID, LocalDateTime at);
 
+    @Query("SELECT p, COUNT(e) as goalCount FROM Player p JOIN MatchEvent e ON e.player.uuid = p.uuid " +
+            "WHERE e.eventType = 'GOAL' GROUP BY p ORDER BY goalCount DESC LIMIT 1")
+    Player findPlayersWithMostGoals();
+
+    @Query("SELECT p, COUNT(e) as assistCount FROM Player p JOIN MatchEvent e ON e.player.uuid = p.uuid " +
+            "WHERE e.eventType = 'ASSIST' GROUP BY p ORDER BY assistCount DESC LIMIT 1")
+    Player findPlayersWithMostAssists();
+
+    @Query("SELECT p, COUNT(e) as redCardCount FROM Player p JOIN MatchEvent e ON e.player.uuid = p.uuid " +
+            "WHERE e.eventType = 'RED_CARD' GROUP BY p ORDER BY redCardCount DESC LIMIT 1")
+    Player findPlayersWithMostRedCards();
+
 }

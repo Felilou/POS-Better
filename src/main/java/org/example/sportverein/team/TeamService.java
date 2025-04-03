@@ -14,6 +14,7 @@ import org.example.sportverein.persons.player.PlayerTeamMembershipRepository;
 import org.example.sportverein.persons.staff.Staff;
 import org.example.sportverein.persons.staff.StaffRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TeamService extends AbstractService<Team> {
 
     private final TeamRepository teamRepository;
@@ -35,20 +37,21 @@ public class TeamService extends AbstractService<Team> {
         return teamRepository;
     }
 
+    @Transactional
     public void addPlayer(UUID playerUUID, UUID teamUUID) {
         Player player = playerRepository.findByUUID(playerUUID);
         Team team = teamRepository.findByUUID(teamUUID);
         player.setTeam(team);
-        playerRepository.save(player);
     }
 
+    @Transactional
     public void addStaff(UUID staffUUID, UUID teamUUID) {
         Staff staff = staffRepository.findByUUID(staffUUID);
         Team team = teamRepository.findByUUID(teamUUID);
         staff.setTeam(team);
-        staffRepository.save(staff);
     }
 
+    @Transactional
     public void removePlayer(UUID playerUUID, UUID teamUUID) {
         Team team = teamRepository.findByUUID(teamUUID);
         Player player = playerRepository.findByUUID(playerUUID);
@@ -58,6 +61,7 @@ public class TeamService extends AbstractService<Team> {
         player.setTeam(null);
     }
 
+    @Transactional
     public void removeStaff(UUID staffUUID, UUID teamUUID) {
         Team team = teamRepository.findByUUID(teamUUID);
         Staff staff = staffRepository.findByUUID(staffUUID);

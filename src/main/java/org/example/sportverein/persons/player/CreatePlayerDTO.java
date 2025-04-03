@@ -29,7 +29,10 @@ public record CreatePlayerDTO(
         String phoneNumber,
 
         @Email
-        String email
+        String email,
+
+        @NotNull
+        Player.Position position
 ) implements CreateDTO<Player> {
         @Override
         public Player toEntity() {
@@ -41,6 +44,7 @@ public record CreatePlayerDTO(
                 player.setPhoneNumber(PhoneNumber.fromString(phoneNumber));
                 player.setArchived(false);
                 player.setJoinedCurrentTeamAt(LocalDateTime.now());
+                player.setPosition(position);
                 return player;
         }
 }

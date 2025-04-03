@@ -9,12 +9,12 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
     <link rel="stylesheet" th:href="@{/webjars/animate.css/animate.min.css}">
 <body class="d-flex flex-column h-100">
-    <header>
+    <header class="sticky-top">
         <div th:replace="~{fragments/navbar :: navbar}"></div>
     </header>
 
     <main class="flex-shrink-0 flex-grow-1">
-        <div class="container mt-4" style="max-width: 1024px">
+        <div class="container-fluid mt-4" style="max-width: 1024px">
             <div layout:fragment="content">
                 <!-- Content will be inserted here -->
             </div>

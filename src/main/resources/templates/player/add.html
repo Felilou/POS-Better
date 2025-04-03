@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/mainLayout}" lang="en">
+<head>
+      <title th:text="${title}">Add Player</title>
+</head>
+<body>
+<div layout:fragment="content">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+          <h1>Add New Player</h1>
+          <a th:href="@{/players}" class="btn btn-outline-secondary">
+              <i class="bi bi-arrow-left"></i> Back to List
+          </a>
+      </div>
+
+      <div class="card">
+          <div class="card-body">
+              <form th:action="@{/players/add}" method="post">
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label for="firstName" class="form-label">First Name</label>
+                          <input type="text" class="form-control" id="firstName" name="firstName"
+                                 required minlength="3" maxlength="20">
+                      </div>
+                      <div class="col-md-6">
+                          <label for="lastName" class="form-label">Last Name</label>
+                          <input type="text" class="form-control" id="lastName" name="lastName"
+                                 required minlength="3" maxlength="20">
+                      </div>
+                  </div>
+
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label for="birthDate" class="form-label">Birth Date</label>
+                          <input type="date" class="form-control" id="birthDate" name="birthDate" required>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="position" class="form-label">Position</label>
+                          <select class="form-select" id="position" name="position" required>
+                              <option th:each="pos : ${T(org.example.sportverein.persons.player.Player.Position).values()}"
+                                      th:value="${pos}"
+                                      th:text="${pos.longName}">
+                                  Position
+                              </option>
+                          </select>
+                      </div>
+                  </div>
+
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label for="email" class="form-label">Email</label>
+                          <input type="email" class="form-control" id="email" name="email">
+                      </div>
+                      <div class="col-md-6">
+                          <label for="phoneNumber" class="form-label">Phone Number</label>
+                          <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                                 placeholder="+49 1234567890">
+                          <small class="form-text text-muted">Format: +49 1234567890</small>
+                      </div>
+                  </div>
+
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button type="reset" class="btn btn-outline-secondary me-md-2">
+                          <i class="bi bi-arrow-counterclockwise"></i> Reset
+                      </button>
+                      <button type="submit" class="btn btn-primary">
+                          <i class="bi bi-plus-circle"></i> Create Player
+                      </button>
+                  </div>
+              </form>
+          </div>
+      </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/mainLayout}" lang="en">
+<head>
+      <title th:text="${title}">Team Details</title>
+</head>
+<body>
+<div layout:fragment="content">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+          <h1 th:text="${team.name}">Team Name</h1>
+          <div>
+              <a th:href="@{/teams}" class="btn btn-outline-secondary me-2">
+                  <i class="bi bi-arrow-left"></i> Back to List
+              </a>
+              <a th:href="@{/teams/{uuid}/edit(uuid=${team.uuid})}" class="btn btn-outline-primary">
+                  <i class="bi bi-pencil"></i> Edit
+              </a>
+          </div>
+      </div>
+
+      <div class="card mb-4">
+          <div class="card-header">
+              <h5 class="card-title mb-0">Players</h5>
+          </div>
+          <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-striped">
+                      <thead>
+                          <tr>
+                              <th>Name</th>
+                              <th>Position</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr th:each="player : ${players}">
+                              <td th:text="${player.firstName + ' ' + player.lastName}">Player Name</td>
+                              <td th:text="${player.position != null ? player.position.longName : '-'}">Position</td>
+                              <td>
+                                  <form th:action="@{/teams/{uuid}/player/{playerUUID}/remove(uuid=${team.uuid}, playerUUID=${player.uuid})}" method="post">
+                                      <button type="submit" class="btn btn-sm btn-outline-danger">
+                                          <i class="bi bi-trash"></i> Remove
+                                      </button>
+                                  </form>
+                              </td>
+                          </tr>
+                          <tr th:if="${players.isEmpty()}">
+                              <td colspan="3" class="text-center">No players found</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+
+      <div class="card mb-4">
+          <div class="card-header">
+              <h5 class="card-title mb-0">Staff</h5>
+          </div>
+          <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-striped">
+                      <thead>
+                          <tr>
+                              <th>Name</th>
+                              <th>Role</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr th:each="staffmem : ${staff}">
+                              <td><a th:href="@{/staff/{uuid}(uuid=${staffmem.uuid})}" th:text="${staffmem.firstName + ' ' + staffmem.lastName}">staff name</a></td>
+                              <td th:text="${staffmem.role != null ? staffmem.role.title : '-'}">Role</td>
+                              <td>
+                                  <form th:action="@{/teams/{uuid}/staff/{staffUUID}/remove(uuid=${team.uuid}, staffUUID=${staffmem.uuid})}" method="post">
+                                      <button type="submit" class="btn btn-sm btn-outline-danger">
+                                          <i class="bi bi-trash"></i> Remove
+                                      </button>
+                                  </form>
+                              </td>
+                          </tr>
+                          <tr th:if="${staff.isEmpty()}">
+                              <td colspan="3" class="text-center">No staff found</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+</div>
+</body>
+</html>

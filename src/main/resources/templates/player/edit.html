@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mainLayout}" lang="en">
+<head>
+    <title th:text="${title}">Edit Player</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Edit Player</h1>
+        <div>
+            <a th:href="@{/players/{uuid}(uuid=${player.uuid})}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Details
+            </a>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form th:action="@{/players/{uuid}/edit(uuid=${player.uuid})}" method="post">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName"
+                               th:value="${player.firstName}" required minlength="3" maxlength="20">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName"
+                               th:value="${player.lastName}" required minlength="3" maxlength="20">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="birthDate" class="form-label">Birth Date</label>
+                        <input type="date" class="form-control" id="birthDate" name="birthDate"
+                               th:value="${player.birthDate}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                               th:value="${player.email}" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                               th:value="${player.phoneNumber != null ? (player.phoneNumber.countryCode + ' ' + player.phoneNumber.number) : ''}"
+                               required>
+                        <small class="form-text text-muted">Format: +49 1234567890</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="position" class="form-label">Position</label>
+                        <select class="form-select" id="position" name="position" required>
+                            <option th:each="pos : ${T(org.example.sportverein.persons.player.Player.Position).values()}"
+                                    th:value="${pos}"
+                                    th:text="${pos.longName}">
+                                Position
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="reset" class="btn btn-outline-secondary me-md-2">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card" th:unless="${teams.isEmpty()}">
+        <div class="card-body">
+            <form th:action="@{/players/{uuid}/team(uuid=${player.uuid})}" method="post">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="teamUUID" class="form-label">Team (Optional)</label>
+                        <select class="form-select" id="teamUUID" name="teamUUID">
+                            <option th:each="team:${teams}" th:text="${team.name}" th:value="${team.uuid}" th:selected="${player.getTeam()!=null&&player.getTeam().uuid.equals(team.uuid)}">Team</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Set Team
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

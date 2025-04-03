@@ -1,0 +1,68 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mainLayout}" lang="en">
+<head>
+    <title th:text="${title}">Player Overview</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Player Overview</h1>
+        <a th:href="@{/players/add}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Add New Player
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Age</th>
+                            <th>Team</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="player : ${players}" th:unless="${player.archived}">
+                            <td>
+                                <a th:href="@{/players/{uuid}(uuid=${player.uuid})}"
+                                   th:text="${player.firstName + ' ' + player.lastName}">
+                                    Player Name
+                                </a>
+                            </td>
+                            <td th:text="${player.position != null ? player.position.longName : '-'}">Position</td>
+                            <td th:text="${player.age.years}">Age</td>
+                            <td>
+                                <a th:if="${player.team != null}"
+                                   th:href="@{/teams/{uuid}(uuid=${player.team.uuid})}"
+                                   th:text="${player.team.name}">
+                                    Team Name
+                                </a>
+                                <span th:unless="${player.team != null}">-</span>
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a th:href="@{/players/{uuid}(uuid=${player.uuid})}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a th:href="@{/players/{uuid}/edit(uuid=${player.uuid})}" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${players.isEmpty()}">
+                            <td colspan="5" class="text-center">No players found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

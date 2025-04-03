@@ -3,12 +3,24 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/mainLayout}" lang="en">
 <head>
-    <title th:text="${title}">Error</title>
+    <title>Error</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>Error</h1>
-    <span>ai ai ai da is was passiert</span>
+    <h1>Error Occurred</h1>
+    <div class="alert alert-danger">
+        <h4 th:text="${status + ' - ' + error}">Status - Error</h4>
+        <p th:text="${message}">Error Message</p>
+    </div>
+
+    <div th:if="${trace}">
+        <h3>Stack Trace</h3>
+        <div class="card">
+            <div class="card-body">
+                <pre th:text="${trace}"></pre>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

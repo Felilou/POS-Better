@@ -30,7 +30,6 @@ public class TeamRestController extends AbstractRestController<Team, CreateTeamD
         );
     }
 
-    //TODO: Add / remove Player and Staff
     @PostMapping("/{uuid}/players")
     public void addPlayerToTeam(@PathVariable UUID uuid, @RequestBody UUID playerUUID) {
         teamService.addPlayer(playerUUID, uuid);

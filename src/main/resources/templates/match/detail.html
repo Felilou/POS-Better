@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mainLayout}" lang="en">
+<head>
+    <title th:text="${title}">Match Details</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 th:text="${match.homeTeam.name + ' vs ' + match.awayTeam.name}">Match Details</h1>
+        <a th:href="@{/matches}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Match Events</h5>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">
+                <i class="bi bi-plus-circle"></i> Add Event
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Event Type</th>
+                            <th>Minute</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="event : ${matchEvents}" th:if="${event.uuid!=null}">
+                            <td th:text="${event.player.firstName + ' ' + event.player.lastName}">Player Name</td>
+                            <td th:text="${event.eventType.description}">Event Type</td>
+                            <td th:text="${event.minute}">Minute</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" th:attr="data-bs-target='#editEventModal-' + ${event.uuid}">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </button>
+                                <form th:action="@{/matches/{uuid}/events/{eventUUID}/remove(uuid=${match.uuid}, eventUUID=${event.uuid})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${matchEvents.isEmpty()}">
+                            <td colspan="4" class="text-center">No events found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEventModalLabel">Add Match Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/matches/{uuid}/events(uuid=${match.uuid})}" method="post">
+                        <div class="mb-3">
+                            <label for="playerUUID" class="form-label">Player</label>
+                            <select class="form-select" id="playerUUID" name="playerUUID" required>
+                                <option value="">-- Select Player --</option>
+                                <option th:each="player : ${players}" th:value="${player.uuid}" th:text="${player.firstName + ' ' + player.lastName}">
+                                    Player
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="eventType" class="form-label">Event Type</label>
+                            <select class="form-select" id="eventType" name="eventType" required>
+                                <option value="">-- Select Event Type --</option>
+                                <option th:each="type : ${T(org.example.sportverein.match.MatchEvent.EventType).values()}"
+                                        th:value="${type}" th:text="${type}">
+                                    Event Type
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="minute" class="form-label">Minute</label>
+                            <input type="number" class="form-control" id="minute" name="minute" min="0" max="90" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Add Event</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Event Modal -->
+    <div th:each="event : ${matchEvents}" class="modal fade" th:id="'editEventModal-' + ${event.uuid}" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEventModalLabel">Edit Match Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/matches/{uuid}/events/{eventUUID}/edit(uuid=${match.uuid}, eventUUID=${event.uuid})}" method="post">
+                        <div class="mb-3">
+                            <label for="playerUUID" class="form-label">Player</label>
+                            <select class="form-select" id="playerUUID" name="playerUUID" required>
+                                <option value="">-- Select Player --</option>
+                                <option th:each="player : ${players}" th:value="${player.uuid}" th:text="${player.firstName + ' ' + player.lastName}" th:selected="${event.player.uuid == player.uuid}">
+                                    Player
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="eventType" class="form-label">Event Type</label>
+                            <select class="form-select" id="eventType" name="eventType" required>
+                                <option value="">-- Select Event Type --</option>
+                                <option th:each="type : ${T(org.example.sportverein.match.MatchEvent.EventType).values()}"
+                                        th:value="${type}" th:text="${type.description}" th:selected="${event.eventType.description.equals(type.description)}">
+                                    Event Type
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="minute" class="form-label">Minute</label>
+                            <input type="number" class="form-control" id="minute" name="minute" min="0" max="90" th:value="${event.minute}" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -8,6 +8,7 @@ import org.example.sportverein.AbstractEntity;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.Period;
 
 @MappedSuperclass
 @Data
@@ -30,8 +31,8 @@ public abstract class Person extends AbstractEntity {
     String email;
 
     @Transient
-    public Duration getAge(){
-        return Duration.between(birthDate, LocalDate.now());
+    public Period getAge() {
+        return Period.between(birthDate, LocalDate.now());
     }
 
 }

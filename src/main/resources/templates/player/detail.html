@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          layout:decorate="~{layouts/mainLayout}" lang="en">
+<head>
+        <title th:text="${title}">Player Details</title>
+</head>
+<body>
+<div layout:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 th:text="${player.firstName + ' ' + player.lastName}">Player Name</h1>
+            <div>
+                <a th:href="@{/players}" class="btn btn-outline-secondary me-2">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
+                <a th:href="@{/players/{uuid}/edit(uuid=${player.uuid})}" class="btn btn-outline-primary">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Full Name:</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext" th:text="${player.firstName + ' ' + player.lastName}">John Doe</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Birth Date:</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext" th:text="${#temporals.format(player.birthDate, 'dd.MM.yyyy')}">01.01.1990</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Age:</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext" th:text="${player.age.years + ' years'}">30 years</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Email:</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext" th:text="${player.email ?: '-'}">player@example.com</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Phone:</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext" th:text="${player.phoneNumber != null ? (player.phoneNumber.countryCode + ' ' + player.phoneNumber.number) : '-'}">+49 1234567</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Team Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Position:</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext" th:text="${player.position != null ? player.position.longName : '-'}">Striker</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Current Team:</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext">
+                                    <a th:if="${player.team != null}"
+                                       th:href="@{/teams/{uuid}(uuid=${player.team.uuid})}"
+                                       th:text="${player.team.name}">
+                                        Team Name
+                                    </a>
+                                    <span th:unless="${player.team != null}">No team</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Joined Team:</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext" th:text="${player.joinedCurrentTeamAt != null ? #temporals.format(player.joinedCurrentTeamAt, 'dd.MM.yyyy HH:mm') : '-'}">01.01.2020</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Team History</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="membership : ${player.teamMemberships}">
+                                <td>
+                                    <a th:if="${membership.team != null}"
+                                       th:href="@{/teams/{uuid}(uuid=${membership.team.uuid})}"
+                                       th:text="${membership.team.name}">
+                                        Team Name
+                                    </a>
+                                    <span th:unless="${membership.team != null}">No team</span>
+                                </td>
+                                <td th:text="${#temporals.format(membership.from, 'dd.MM.yyyy HH:mm')}">01.01.2020</td>
+                                <td th:text="${#temporals.format(membership.to, 'dd.MM.yyyy HH:mm')}">01.01.2022</td>
+                                <td th:text="${membership.getDaysTotal() + ' days'}">730 days</td>
+                            </tr>
+                            <tr th:if="${player.teamMemberships.isEmpty()}">
+                                <td colspan="4" class="text-center">No team history available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Match Events</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Match</th>
+                                <th>Event Type</th>
+                                <th>Minute</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="event : ${matchEvents}">
+                                <td>
+                                    <a th:href="@{/matches/{uuid}(uuid=${event.match.uuid})}"
+                                       th:text="${event.match.homeTeam.name + ' vs ' + event.match.awayTeam.name}">
+                                        Home vs Away
+                                    </a>
+                                </td>
+                                <td th:text="${event.eventType}">GOAL</td>
+                                <td th:text="${event.minute}">90'</td>
+                            </tr>
+                            <tr th:if="${matchEvents.isEmpty()}">
+                                <td colspan="3" class="text-center">No match events available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+</body>
+</html>

@@ -30,7 +30,10 @@ public record UpdatePlayerDTO(
 
         @Email
         @NotNull
-        String email
+        String email,
+
+        @NotNull
+        Player.Position position
 ) implements UpdateDTO<Player> {
         @Override
         public Player updateEntity(Player entity) {
@@ -38,6 +41,7 @@ public record UpdatePlayerDTO(
                 entity.setLastName(lastName);
                 entity.setBirthDate(birthDate);
                 entity.setEmail(email);
+                entity.setPosition(position);
                 entity.setPhoneNumber(PhoneNumber.fromString(phoneNumber));
                 return entity;
         }

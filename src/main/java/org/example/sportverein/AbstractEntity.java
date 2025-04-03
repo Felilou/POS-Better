@@ -1,5 +1,6 @@
 package org.example.sportverein;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreRemove;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class AbstractEntity extends AbstractPersistable<Long> {
 
+    @Column(unique = true)
     private UUID uuid;
 
     @PrePersist
