@@ -6,13 +6,13 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.4.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
-    <groupId>org.example</groupId>
-    <artifactId>Sportverein</artifactId>
+    <groupId>at.spengergasse</groupId>
+    <artifactId>huber</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Sportverein</name>
-    <description>Sportverein</description>
+    <name>football_manager</name>
+    <description>An application to manage Team and Player and their staff and let them play matches</description>
     <url/>
     <licenses>
         <license/>
