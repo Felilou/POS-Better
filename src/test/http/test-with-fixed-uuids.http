@@ -1,0 +1,150 @@
+### Variables for fixed UUIDs
+@bayernTeamUuid = 11111111-1111-1111-1111-111111111111
+@dortmundTeamUuid = 22222222-2222-2222-2222-222222222222
+@leipzigTeamUuid = 33333333-3333-3333-3333-333333333333
+@leverkusenTeamUuid = 44444444-4444-4444-4444-444444444444
+
+@neuerUuid = aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+@muellerUuid = bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb
+@kimmichUuid = cccccccc-cccc-cccc-cccc-cccccccccccc
+@reusUuid = dddddddd-dddd-dddd-dddd-dddddddddddd
+@hummelsUuid = eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee
+@haalandUuid = ffffffff-ffff-ffff-ffff-ffffffffffff
+
+@nagelsmannUuid = jjjjjjjj-jjjj-jjjj-jjjj-jjjjjjjjjjjj
+@terzicUuid = kkkkkkkk-kkkk-kkkk-kkkk-kkkkkkkkkkkk
+
+@bayernDortmundMatchUuid = tttttttt-tttt-tttt-tttt-tttttttttttt
+@leipzigLeverkusenMatchUuid = uuuuuuuu-uuuu-uuuu-uuuu-uuuuuuuuuuuu
+
+@muellerGoalEventUuid = yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy
+
+### Get all teams
+GET http://localhost:8080/api/team
+Accept: application/json
+
+### Get Bayern München team
+GET http://localhost:8080/api/team/{{bayernTeamUuid}}
+Accept: application/json
+
+### Get all players from Bayern
+GET http://localhost:8080/api/team/{{bayernTeamUuid}}/players
+Accept: application/json
+
+### Get Thomas Müller
+GET http://localhost:8080/api/player/{{muellerUuid}}
+Accept: application/json
+
+### Get Bayern-Dortmund match
+GET http://localhost:8080/api/match/{{bayernDortmundMatchUuid}}
+Accept: application/json
+
+### Get events from Bayern-Dortmund match
+GET http://localhost:8080/api/match/{{bayernDortmundMatchUuid}}/events
+Accept: application/json
+
+### Add Haaland to Bayern
+POST http://localhost:8080/api/player/{{haalandUuid}}/team
+Content-Type: application/json
+
+"{{bayernTeamUuid}}"
+
+### Get updated Haaland info
+GET http://localhost:8080/api/player/{{haalandUuid}}
+Accept: application/json
+
+### Update Nagelsmann's email
+PUT http://localhost:8080/api/staff/{{nagelsmannUuid}}
+Content-Type: application/json
+
+{
+  "firstName": "Julian",
+  "lastName": "Nagelsmann",
+  "email": "nagelsmann.updated@example.com",
+  "countryCode": "+49",
+  "number": "1122334"
+}
+
+### Get updated Nagelsmann info
+GET http://localhost:8080/api/staff/{{nagelsmannUuid}}
+Accept: application/json
+
+### Create a new match between Bayern and Leverkusen
+POST http://localhost:8080/api/match
+Content-Type: application/json
+
+{
+  "homeTeamUuid": "{{bayernTeamUuid}}",
+  "awayTeamUuid": "{{leverkusenTeamUuid}}",
+  "kickOff": "2023-12-20T20:30:00"
+}
+
+> {%
+    client.global.set("newMatchUuid", response.body.uuid);
+    client.log("New Match UUID: " + client.global.get("newMatchUuid"));
+%}
+
+### Add a goal for Müller in the new match
+POST http://localhost:8080/api/match/{{newMatchUuid}}/events
+Content-Type: application/json
+
+{
+  "playerUuid": "{{muellerUuid}}",
+  "eventType": "GOAL",
+  "min": 42
+}
+
+> {%
+    client.global.set("newEventUuid", response.body.uuid);
+    client.log("New Event UUID: " + client.global.get("newEventUuid"));
+%}
+
+### Get events from the new match
+GET http://localhost:8080/api/match/{{newMatchUuid}}/events
+Accept: application/json
+
+### Create a new player
+POST http://localhost:8080/api/player
+Content-Type: application/json
+
+{
+  "firstName": "Jamal",
+  "lastName": "Musiala",
+  "birthDate": "2003-02-26",
+  "email": "jamal.musiala@example.com",
+  "countryCode": "+49",
+  "number": "42",
+  "position": "AM"
+}
+
+> {%
+    client.global.set("musialaUuid", response.body.uuid);
+    client.log("Musiala UUID: " + client.global.get("musialaUuid"));
+%}
+
+### Add Musiala to Bayern
+POST http://localhost:8080/api/player/{{musialaUuid}}/team
+Content-Type: application/json
+
+"{{bayernTeamUuid}}"
+
+### Get all Bayern players after adding Musiala
+GET http://localhost:8080/api/team/{{bayernTeamUuid}}/players
+Accept: application/json
+
+### Remove Haaland from Bayern
+DELETE http://localhost:8080/api/player/{{haalandUuid}}/team
+
+### Get Haaland after removing from team
+GET http://localhost:8080/api/player/{{haalandUuid}}
+Accept: application/json
+
+### Delete the new match event
+DELETE http://localhost:8080/api/match/{{newMatchUuid}}/events/{{newEventUuid}}
+
+### Delete the new match
+DELETE http://localhost:8080/api/match/{{newMatchUuid}}
+
+### Get all matches after deletion
+GET http://localhost:8080/api/match
+Accept: application/json

@@ -23,7 +23,7 @@ public class Player extends Person {
 
     private LocalDateTime joinedCurrentTeamAt;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private final Set<PlayerTeamMembership> teamMemberships = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
