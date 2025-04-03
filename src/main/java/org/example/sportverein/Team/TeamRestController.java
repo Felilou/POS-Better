@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/teams")
 @RequiredArgsConstructor
-public class TeamRestController extends AbstractRestController<Team, TeamDTO> {
+public class TeamRestController extends AbstractRestController<Team, CreateTeamDTO, UpdateTeamDTO, TeamDTO> {
 
     private final TeamService teamService;
 
@@ -28,4 +28,7 @@ public class TeamRestController extends AbstractRestController<Team, TeamDTO> {
                 teamService.getAllEventsFromTeam(entity.getUuid())
         );
     }
+
+    //TODO: Add / remove Player and Staff
+
 }

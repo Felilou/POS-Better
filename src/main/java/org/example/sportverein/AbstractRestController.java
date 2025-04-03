@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-public abstract class AbstractRestController<E extends AbstractEntity, RDTO> {
+public abstract class AbstractRestController<E extends AbstractEntity, CDTO extends CreateDTO<E>, UDTO extends UpdateDTO<E>, RDTO> {
 
     public abstract AbstractService<E> getService();
 
@@ -21,12 +21,12 @@ public abstract class AbstractRestController<E extends AbstractEntity, RDTO> {
     }
 
     @PostMapping
-    public RDTO save(@RequestBody CreateDTO<E> dto){
+    public RDTO save(@RequestBody CDTO dto){
         return toDTO(getService().create(dto));
     }
 
     @PutMapping("/{uuid}")
-    public RDTO update(@PathVariable UUID uuid, @RequestBody UpdateDTO<E> dto){
+    public RDTO update(@PathVariable UUID uuid, @RequestBody UDTO dto){
         return toDTO(getService().updateEntity(dto, uuid));
     }
 

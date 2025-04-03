@@ -19,7 +19,7 @@ public interface PlayerRepository extends UUIDRepository<Player> {
     @Query("SELECT p FROM Player p WHERE " +
             "(p.team.uuid = :teamUUID AND p.joinedCurrentTeamAt <= :at) OR " +
             "p.id IN (SELECT ptm.player.id FROM PlayerTeamMembership ptm WHERE " +
-            "ptm.team.uuid = :teamUUID AND ptm.from <= :at AND ptm.to >= :at)")
+             "ptm.team.uuid = :teamUUID AND ptm.from <= :at AND ptm.to >= :at)")
     List<Player> getAllByTeamHistoryAndTeamUUID(UUID teamUUID, LocalDateTime at);
 
 }

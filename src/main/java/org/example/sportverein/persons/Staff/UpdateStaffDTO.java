@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import org.example.sportverein.UpdateDTO;
+import org.example.sportverein.persons.PhoneNumber;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
@@ -35,5 +37,15 @@ public record UpdateStaffDTO(
 
         @NotNull
         Staff.Role role
-) {
+) implements UpdateDTO<Staff> {
+        @Override
+        public Staff updateEntity(Staff entity) {
+                entity.setFirstName(firstName);
+                entity.setLastName(lastName);
+                entity.setBirthDate(birthDate);
+                entity.setEmail(email);
+                entity.setRole(role);
+                entity.setPhoneNumber(PhoneNumber.fromString(phoneNumber));
+                return entity;
+        }
 }

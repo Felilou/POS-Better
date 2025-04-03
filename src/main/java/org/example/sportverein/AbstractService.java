@@ -23,8 +23,8 @@ public abstract class AbstractService<E extends AbstractEntity> {
 
     public E updateEntity(UpdateDTO<E> dto, UUID uuid) {
         E entity = getByUUID(uuid);
-        dto.updateEntity(entity);
-        return entity;
+        entity = dto.updateEntity(entity);
+        return getUUIDRepository().save(entity);
     }
 
     public E delete(UUID uuid) {
